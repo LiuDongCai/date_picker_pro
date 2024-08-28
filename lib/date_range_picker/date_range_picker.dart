@@ -470,8 +470,8 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
     final DateTime month =
         DateUtils.addMonthsToMonthDate(widget.firstDate, monthIndex);
     return _MonthItem(
-      selectedDateStart: _startDate,
-      selectedDateEnd: _endDate,
+      selectedDateStart: widget.initialStartDate,
+      selectedDateEnd: widget.initialEndDate,
       currentDate: widget.currentDate,
       firstDate: widget.firstDate,
       lastDate: widget.lastDate,
@@ -489,7 +489,6 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
   @override
   Widget build(BuildContext context) {
     const Key sliverAfterKey = Key('sliverAfterKey');
-
     return Column(
       children: <Widget>[
         const _DayHeaders(),
@@ -500,36 +499,42 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
             lastDate: widget.lastDate,
             initialFocusedDay:
                 _startDate ?? widget.initialStartDate ?? widget.currentDate,
-            // In order to prevent performance issues when displaying the
-            // correct initial month, 2 `SliverList`s are used to split the
-            // months. The first item in the second SliverList is the initial
-            // month to be displayed.
-            child: CustomScrollView(
-              key: _scrollViewKey,
-              controller: _controller,
-              center: sliverAfterKey,
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) =>
-                        _buildMonthItem(context, index, true),
-                    childCount: _initialMonthIndex,
+            child: ScrollConfiguration(
+              behavior: _NoShadowScrollBehavior(),
+              child: CustomScrollView(
+                key: _scrollViewKey,
+                controller: _controller,
+                center: sliverAfterKey,
+                slivers: <Widget>[
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) =>
+                          _buildMonthItem(context, index, true),
+                      childCount: _initialMonthIndex,
+                    ),
                   ),
-                ),
-                SliverList(
-                  key: sliverAfterKey,
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) =>
-                        _buildMonthItem(context, index, false),
-                    childCount: _numberOfMonths - _initialMonthIndex,
+                  SliverList(
+                    key: sliverAfterKey,
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) =>
+                          _buildMonthItem(context, index, false),
+                      childCount: _numberOfMonths - _initialMonthIndex,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ],
     );
+  }
+}
+
+class _NoShadowScrollBehavior extends ScrollBehavior {
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }
 
@@ -597,11 +602,15 @@ class _MonthItemState extends State<_MonthItem> {
   void initState() {
     super.initState();
     final int daysInMonth = DateUtils.getDaysInMonth(
-        widget.displayedMonth.year, widget.displayedMonth.month);
+      widget.displayedMonth.year,
+      widget.displayedMonth.month,
+    );
     _dayFocusNodes = List<FocusNode>.generate(
       daysInMonth,
-      (int index) =>
-          FocusNode(skipTraversal: true, debugLabel: 'Day ${index + 1}'),
+      (int index) => FocusNode(
+        skipTraversal: true,
+        debugLabel: 'Day ${index + 1}',
+      ),
     );
   }
 

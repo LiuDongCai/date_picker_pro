@@ -1,16 +1,15 @@
 name: flutter_date_picker
-description: "A new Flutter project."
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-version: 1.0.0+1
+description: flutter_date_picker,Provide date range select,More will be provided in the future
+version: 0.0.1
+homepage: https://github.com/LiuDongCai/flutter_date_picker
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
 
   cupertino_icons: ^1.0.6
 
