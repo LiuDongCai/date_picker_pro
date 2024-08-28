@@ -88,7 +88,13 @@ class DateRangePicker extends StatefulWidget {
     required this.lastDate,
     this.currentDate,
     this.restorationId,
+    this.intervalColor,
+    this.selectedColor,
+    this.selectedTextColor,
+    this.enableTextColor,
+    this.disableTextColor,
     this.controller,
+    this.selectedShape = BoxShape.rectangle,
   });
 
   final DateTimeRange? initialDateRange;
@@ -101,7 +107,19 @@ class DateRangePicker extends StatefulWidget {
 
   final String? restorationId;
 
+  final Color? intervalColor;
+
+  final Color? selectedColor;
+
+  final Color? selectedTextColor;
+
+  final Color? enableTextColor;
+
+  final Color? disableTextColor;
+
   final DateRangePickerController? controller;
+
+  final BoxShape selectedShape;
 
   @override
   State<DateRangePicker> createState() => DateRangePickerState();
@@ -185,6 +203,12 @@ class DateRangePickerState extends State<DateRangePicker>
       firstDate: widget.firstDate,
       lastDate: widget.lastDate,
       currentDate: widget.currentDate,
+      intervalColor: widget.intervalColor,
+      selectedColor: widget.selectedColor,
+      selectedTextColor: widget.selectedTextColor,
+      enableTextColor: widget.enableTextColor,
+      disableTextColor: widget.disableTextColor,
+      selectedShape: widget.selectedShape,
       onStartDateChanged: _handleStartDateChanged,
       onEndDateChanged: _handleEndDateChanged,
     );
@@ -233,6 +257,12 @@ class _CalendarRangePickerDialog extends StatelessWidget {
     required this.currentDate,
     required this.onStartDateChanged,
     required this.onEndDateChanged,
+    required this.intervalColor,
+    required this.selectedColor,
+    required this.selectedTextColor,
+    required this.enableTextColor,
+    required this.disableTextColor,
+    required this.selectedShape,
   });
 
   final DateTime? selectedStartDate;
@@ -242,6 +272,12 @@ class _CalendarRangePickerDialog extends StatelessWidget {
   final DateTime? currentDate;
   final ValueChanged<DateTime> onStartDateChanged;
   final ValueChanged<DateTime?> onEndDateChanged;
+  final Color? intervalColor;
+  final Color? selectedColor;
+  final Color? selectedTextColor;
+  final Color? enableTextColor;
+  final Color? disableTextColor;
+  final BoxShape selectedShape;
 
   @override
   Widget build(BuildContext context) {
@@ -264,6 +300,12 @@ class _CalendarRangePickerDialog extends StatelessWidget {
           currentDate: currentDate,
           onStartDateChanged: onStartDateChanged,
           onEndDateChanged: onEndDateChanged,
+          intervalColor: intervalColor,
+          selectedColor: selectedColor,
+          selectedTextColor: selectedTextColor,
+          enableTextColor: enableTextColor,
+          disableTextColor: disableTextColor,
+          selectedShape: selectedShape,
         ),
       ),
     );
@@ -271,7 +313,6 @@ class _CalendarRangePickerDialog extends StatelessWidget {
 }
 
 class _CalendarDateRangePicker extends StatefulWidget {
-  /// Creates a scrollable calendar grid for picking date ranges.
   _CalendarDateRangePicker({
     DateTime? initialStartDate,
     DateTime? initialEndDate,
@@ -280,6 +321,12 @@ class _CalendarDateRangePicker extends StatefulWidget {
     DateTime? currentDate,
     required this.onStartDateChanged,
     required this.onEndDateChanged,
+    Color? intervalColor,
+    Color? selectedColor,
+    Color? selectedTextColor,
+    Color? enableTextColor,
+    Color? disableTextColor,
+    required this.selectedShape,
   })  : initialStartDate = initialStartDate != null
             ? DateUtils.dateOnly(initialStartDate)
             : null,
@@ -287,7 +334,12 @@ class _CalendarDateRangePicker extends StatefulWidget {
             initialEndDate != null ? DateUtils.dateOnly(initialEndDate) : null,
         firstDate = DateUtils.dateOnly(firstDate),
         lastDate = DateUtils.dateOnly(lastDate),
-        currentDate = DateUtils.dateOnly(currentDate ?? DateTime.now()) {
+        currentDate = DateUtils.dateOnly(currentDate ?? DateTime.now()),
+        intervalColor = intervalColor ?? Colors.blueGrey.shade50,
+        selectedColor = selectedColor ?? Colors.blue,
+        selectedTextColor = selectedTextColor ?? Colors.white,
+        enableTextColor = enableTextColor ?? Colors.black,
+        disableTextColor = disableTextColor ?? Colors.grey {
     assert(
       this.initialStartDate == null ||
           this.initialEndDate == null ||
@@ -300,26 +352,31 @@ class _CalendarDateRangePicker extends StatefulWidget {
     );
   }
 
-  /// The [DateTime] that represents the start of the initial date range selection.
   final DateTime? initialStartDate;
 
-  /// The [DateTime] that represents the end of the initial date range selection.
   final DateTime? initialEndDate;
 
-  /// The earliest allowable [DateTime] that the user can select.
   final DateTime firstDate;
 
-  /// The latest allowable [DateTime] that the user can select.
   final DateTime lastDate;
 
-  /// The [DateTime] representing today. It will be highlighted in the day grid.
   final DateTime currentDate;
 
-  /// Called when the user changes the start date of the selected range.
   final ValueChanged<DateTime>? onStartDateChanged;
 
-  /// Called when the user changes the end date of the selected range.
   final ValueChanged<DateTime?>? onEndDateChanged;
+
+  final Color intervalColor;
+
+  final Color selectedColor;
+
+  final Color selectedTextColor;
+
+  final Color enableTextColor;
+
+  final Color disableTextColor;
+
+  final BoxShape selectedShape;
 
   @override
   _CalendarDateRangePickerState createState() =>
@@ -343,8 +400,6 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
     _startDate = widget.initialStartDate;
     _endDate = widget.initialEndDate;
 
-    // Calculate the index for the initially displayed month. This is needed to
-    // divide the list of months into two `SliverList`s.
     final DateTime initialDate = widget.initialStartDate ?? widget.currentDate;
     if (!initialDate.isBefore(widget.firstDate) &&
         !initialDate.isAfter(widget.lastDate)) {
@@ -388,15 +443,6 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
     }
   }
 
-  // This updates the selected date range using this logic:
-  //
-  // * From the unselected state, selecting one date creates the start date.
-  //   * If the next selection is before the start date, reset date range and
-  //     set the start date to that selection.
-  //   * If the next selection is on or after the start date, set the end date
-  //     to that selection.
-  // * After both start and end dates are selected, any subsequent selection
-  //   resets the date range and sets start date to that selection.
   void _updateSelection(DateTime date) {
     _vibrate();
     setState(() {
@@ -431,6 +477,12 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
       lastDate: widget.lastDate,
       displayedMonth: month,
       onChanged: _updateSelection,
+      intervalColor: widget.intervalColor,
+      selectedColor: widget.selectedColor,
+      selectedTextColor: widget.selectedTextColor,
+      enableTextColor: widget.enableTextColor,
+      disableTextColor: widget.disableTextColor,
+      selectedShape: widget.selectedShape,
     );
   }
 
@@ -491,6 +543,12 @@ class _MonthItem extends StatefulWidget {
     required this.firstDate,
     required this.lastDate,
     required this.displayedMonth,
+    required this.intervalColor,
+    required this.selectedColor,
+    required this.selectedTextColor,
+    required this.enableTextColor,
+    required this.disableTextColor,
+    required this.selectedShape,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(selectedDateStart == null ||
             !selectedDateStart.isBefore(firstDate)),
@@ -502,37 +560,37 @@ class _MonthItem extends StatefulWidget {
             selectedDateEnd == null ||
             !selectedDateStart.isAfter(selectedDateEnd));
 
-  /// The currently selected start date.
-  ///
-  /// This date is highlighted in the picker.
   final DateTime? selectedDateStart;
 
-  /// The currently selected end date.
-  ///
-  /// This date is highlighted in the picker.
   final DateTime? selectedDateEnd;
 
-  /// The current date at the time the picker is displayed.
   final DateTime currentDate;
 
-  /// Called when the user picks a day.
   final ValueChanged<DateTime> onChanged;
 
-  /// The earliest date the user is permitted to pick.
   final DateTime firstDate;
 
-  /// The latest date the user is permitted to pick.
   final DateTime lastDate;
 
-  /// The month whose days are displayed by this picker.
   final DateTime displayedMonth;
+
+  final Color intervalColor;
+
+  final Color selectedColor;
+
+  final Color selectedTextColor;
+
+  final Color enableTextColor;
+
+  final Color disableTextColor;
+
+  final BoxShape selectedShape;
 
   @override
   _MonthItemState createState() => _MonthItemState();
 }
 
 class _MonthItemState extends State<_MonthItem> {
-  /// List of [FocusNode]s, one for each day of the month.
   late List<FocusNode> _dayFocusNodes;
 
   @override
@@ -564,11 +622,6 @@ class _MonthItemState extends State<_MonthItem> {
       node.dispose();
     }
     super.dispose();
-  }
-
-  Color _highlightColor(BuildContext context) {
-    return DatePickerTheme.of(context).rangeSelectionBackgroundColor ??
-        DatePickerTheme.defaults(context).rangeSelectionBackgroundColor!;
   }
 
   void _dayFocusChanged(bool focused) {
@@ -619,7 +672,12 @@ class _MonthItemState extends State<_MonthItem> {
       focusNode: _dayFocusNodes[day - 1],
       onChanged: widget.onChanged,
       onFocusChange: _dayFocusChanged,
-      highlightColor: _highlightColor(context),
+      intervalColor: widget.intervalColor,
+      selectedColor: widget.selectedColor,
+      selectedTextColor: widget.selectedTextColor,
+      enableTextColor: widget.enableTextColor,
+      disableTextColor: widget.disableTextColor,
+      selectedShape: widget.selectedShape,
       isDisabled: isDisabled,
       isRangeSelected: isRangeSelected,
       isSelectedDayStart: isSelectedDayStart,
@@ -631,7 +689,7 @@ class _MonthItemState extends State<_MonthItem> {
   }
 
   Widget _buildEdgeContainer(BuildContext context, bool isHighlighted) {
-    return Container(color: isHighlighted ? _highlightColor(context) : null);
+    return Container(color: isHighlighted ? widget.intervalColor : null);
   }
 
   @override
@@ -752,7 +810,11 @@ class _DayItem extends StatefulWidget {
     required this.focusNode,
     required this.onChanged,
     required this.onFocusChange,
-    required this.highlightColor,
+    required this.intervalColor,
+    required this.selectedColor,
+    required this.selectedTextColor,
+    required this.enableTextColor,
+    required this.disableTextColor,
     required this.isDisabled,
     required this.isRangeSelected,
     required this.isSelectedDayStart,
@@ -760,6 +822,7 @@ class _DayItem extends StatefulWidget {
     required this.isInRange,
     required this.isOneDayRange,
     required this.isToday,
+    required this.selectedShape,
   });
 
   final DateTime day;
@@ -770,7 +833,15 @@ class _DayItem extends StatefulWidget {
 
   final ValueChanged<bool> onFocusChange;
 
-  final Color highlightColor;
+  final Color intervalColor;
+
+  final Color selectedColor;
+
+  final Color selectedTextColor;
+
+  final Color enableTextColor;
+
+  final Color disableTextColor;
 
   final bool isDisabled;
 
@@ -786,78 +857,37 @@ class _DayItem extends StatefulWidget {
 
   final bool isToday;
 
+  final BoxShape selectedShape;
+
   @override
   State<_DayItem> createState() => _DayItemState();
 }
 
 class _DayItemState extends State<_DayItem> {
-  final MaterialStatesController _statesController = MaterialStatesController();
-
-  @override
-  void dispose() {
-    _statesController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final ColorScheme colorScheme = theme.colorScheme;
     final TextTheme textTheme = theme.textTheme;
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
-    final DatePickerThemeData datePickerTheme = DatePickerTheme.of(context);
-    final DatePickerThemeData defaults = DatePickerTheme.defaults(context);
     final TextDirection textDirection = Directionality.of(context);
-    final Color highlightColor = widget.highlightColor;
+    final Color intervalColor = widget.intervalColor;
 
     BoxDecoration? decoration;
     TextStyle? itemStyle = textTheme.bodyMedium;
 
-    T? effectiveValue<T>(T? Function(DatePickerThemeData? theme) getProperty) {
-      return getProperty(datePickerTheme) ?? getProperty(defaults);
-    }
-
-    T? resolve<T>(
-        MaterialStateProperty<T>? Function(DatePickerThemeData? theme)
-            getProperty,
-        Set<MaterialState> states) {
-      return effectiveValue(
-        (DatePickerThemeData? theme) {
-          return getProperty(theme)?.resolve(states);
-        },
-      );
-    }
-
-    final Set<MaterialState> states = <MaterialState>{
-      if (widget.isDisabled) MaterialState.disabled,
-      if (widget.isSelectedDayStart || widget.isSelectedDayEnd)
-        MaterialState.selected,
-    };
-
-    _statesController.value = states;
-
-    final Color? dayForegroundColor = resolve<Color?>(
-        (DatePickerThemeData? theme) => theme?.dayForegroundColor, states);
-    final Color? dayBackgroundColor = resolve<Color?>(
-        (DatePickerThemeData? theme) => theme?.dayBackgroundColor, states);
-    final MaterialStateProperty<Color?> dayOverlayColor =
-        MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) => effectiveValue(
-                  (DatePickerThemeData? theme) => widget.isInRange
-                      ? theme?.rangeSelectionOverlayColor?.resolve(states)
-                      : theme?.dayOverlayColor?.resolve(states),
-                ));
-
     _HighlightPainter? highlightPainter;
 
+    itemStyle = textTheme.bodyMedium?.apply(color: widget.enableTextColor);
+
     if (widget.isSelectedDayStart || widget.isSelectedDayEnd) {
-      // The selected start and end dates gets a circle background
-      // highlight, and a contrasting text color.
-      itemStyle = textTheme.bodyMedium?.apply(color: dayForegroundColor);
+      itemStyle = textTheme.bodyMedium?.apply(color: widget.selectedTextColor);
       decoration = BoxDecoration(
-        color: dayBackgroundColor,
-        shape: BoxShape.circle,
+        color: widget.selectedColor,
+        shape: widget.selectedShape,
+        borderRadius: widget.selectedShape == BoxShape.rectangle
+            ? BorderRadius.circular(4)
+            : null,
       );
 
       if (widget.isRangeSelected && !widget.isOneDayRange) {
@@ -865,7 +895,7 @@ class _DayItemState extends State<_DayItem> {
             ? _HighlightPainterStyle.highlightTrailing
             : _HighlightPainterStyle.highlightLeading;
         highlightPainter = _HighlightPainter(
-          color: highlightColor,
+          color: intervalColor,
           style: style,
           textDirection: textDirection,
         );
@@ -873,31 +903,27 @@ class _DayItemState extends State<_DayItem> {
     } else if (widget.isInRange) {
       // The days within the range get a light background highlight.
       highlightPainter = _HighlightPainter(
-        color: highlightColor,
+        color: intervalColor,
         style: _HighlightPainterStyle.highlightAll,
         textDirection: textDirection,
       );
     } else if (widget.isDisabled) {
-      itemStyle = textTheme.bodyMedium
-          ?.apply(color: colorScheme.onSurface.withOpacity(0.38));
+      itemStyle = textTheme.bodyMedium?.apply(color: widget.disableTextColor);
     } else if (widget.isToday) {
       // The current day gets a different text color and a circle stroke
       // border.
-      itemStyle = textTheme.bodyMedium?.apply(color: colorScheme.primary);
+      itemStyle = textTheme.bodyMedium?.apply(color: widget.selectedColor);
       decoration = BoxDecoration(
-        border: Border.all(color: colorScheme.primary),
-        shape: BoxShape.circle,
+        border: Border.all(color: widget.selectedColor),
+        shape: widget.selectedShape,
+        borderRadius: widget.selectedShape == BoxShape.rectangle
+            ? BorderRadius.circular(4)
+            : null,
       );
     }
 
     final String dayText = localizations.formatDecimal(widget.day.day);
 
-    // We want the day of month to be spoken first irrespective of the
-    // locale-specific preferences or TextDirection. This is because
-    // an accessibility user is more likely to be interested in the
-    // day of month before the rest of the date, as they are looking
-    // for the day of month. To do that we prepend day of month to the
-    // formatted full date.
     final String semanticLabelSuffix =
         widget.isToday ? ', ${localizations.currentDateLabel}' : '';
     String semanticLabel =
@@ -935,8 +961,6 @@ class _DayItemState extends State<_DayItem> {
         focusNode: widget.focusNode,
         onTap: () => widget.onChanged(widget.day),
         radius: _monthItemRowHeight / 2 + 4,
-        statesController: _statesController,
-        overlayColor: dayOverlayColor,
         onFocusChange: widget.onFocusChange,
         child: dayWidget,
       );
