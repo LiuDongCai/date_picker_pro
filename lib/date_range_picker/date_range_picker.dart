@@ -94,7 +94,7 @@ class DateRangePicker extends StatefulWidget {
     this.enableTextColor,
     this.disableTextColor,
     this.controller,
-    this.selectedShape = BoxShape.rectangle,
+    this.selectedShape = BoxShape.circle,
   });
 
   final DateTimeRange? initialDateRange;
