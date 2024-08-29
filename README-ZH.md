@@ -63,6 +63,8 @@
 | disableTextColor  | 不可选日期的文本颜色                                |
 | selectedShape     | 选中日期的形状，含矩形、圆形                            |
 
+##### Sample([Source Code](/example/lib/main.dart))
+https://github.com/user-attachments/assets/4c0620ca-43c9-4c94-b06f-8b8ed43b1c05
 
 ## Issues and Feedback
 

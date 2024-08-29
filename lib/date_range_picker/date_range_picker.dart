@@ -134,10 +134,24 @@ class DateRangePickerState extends State<DateRangePicker>
   final RestorableBool _autoValidate = RestorableBool(false);
   final GlobalKey _calendarPickerKey = GlobalKey();
 
+  Color? intervalColor;
+  Color? selectedColor;
+  Color? selectedTextColor;
+  Color? enableTextColor;
+  Color? disableTextColor;
+  BoxShape selectedShape = BoxShape.circle;
+
   @override
   void initState() {
     super.initState();
     widget.controller?.attach(this);
+    // Initialize
+    intervalColor = widget.intervalColor;
+    selectedColor = widget.selectedColor;
+    selectedTextColor = widget.selectedTextColor;
+    enableTextColor = widget.enableTextColor;
+    disableTextColor = widget.disableTextColor;
+    selectedShape = widget.selectedShape;
   }
 
   @override
@@ -158,6 +172,7 @@ class DateRangePickerState extends State<DateRangePicker>
     super.dispose();
   }
 
+  /// Reset the selected date range
   void reset() {
     setState(() {
       _selectedStart.value = null;
@@ -165,11 +180,62 @@ class DateRangePickerState extends State<DateRangePicker>
     });
   }
 
+  /// Get the selected date range
   DateTimeRange? getDateTimeRange() {
     final DateTimeRange? selectedRange = _hasSelectedDateRange
         ? DateTimeRange(start: _selectedStart.value!, end: _selectedEnd.value!)
         : null;
     return selectedRange;
+  }
+
+  /// Set the initial date range
+  void setInitialDateRange(DateTimeRange dateRange) {
+    setState(() {
+      _selectedStart.value = dateRange.start;
+      _selectedEnd.value = dateRange.end;
+    });
+  }
+
+  /// Set the Interval Color
+  void setIntervalColor(Color color) {
+    setState(() {
+      intervalColor = color;
+    });
+  }
+
+  /// Set the Selected Color
+  void setSelectedColor(Color color) {
+    setState(() {
+      selectedColor = color;
+    });
+  }
+
+  /// Set the Selected Text Color
+  setSelectedTextColor(Color color) {
+    setState(() {
+      selectedTextColor = color;
+    });
+  }
+
+  /// Set the Enable Text Color
+  setEnableTextColor(Color color) {
+    setState(() {
+      enableTextColor = color;
+    });
+  }
+
+  /// Set the Disable Text Color
+  setDisableTextColor(Color color) {
+    setState(() {
+      disableTextColor = color;
+    });
+  }
+
+  /// Set the Selected Shape
+  setSelectedShape(BoxShape shape) {
+    setState(() {
+      selectedShape = shape;
+    });
   }
 
   void _handleStartDateChanged(DateTime? date) {
@@ -203,12 +269,12 @@ class DateRangePickerState extends State<DateRangePicker>
       firstDate: widget.firstDate,
       lastDate: widget.lastDate,
       currentDate: widget.currentDate,
-      intervalColor: widget.intervalColor,
-      selectedColor: widget.selectedColor,
-      selectedTextColor: widget.selectedTextColor,
-      enableTextColor: widget.enableTextColor,
-      disableTextColor: widget.disableTextColor,
-      selectedShape: widget.selectedShape,
+      intervalColor: intervalColor,
+      selectedColor: selectedColor,
+      selectedTextColor: selectedTextColor,
+      enableTextColor: enableTextColor,
+      disableTextColor: disableTextColor,
+      selectedShape: selectedShape,
       onStartDateChanged: _handleStartDateChanged,
       onEndDateChanged: _handleEndDateChanged,
     );
