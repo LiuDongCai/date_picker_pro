@@ -94,6 +94,7 @@ class DateRangePicker extends StatefulWidget {
     this.enableTextColor,
     this.disableTextColor,
     this.controller,
+    this.onDateTimeRangeChanged,
     this.selectedShape = BoxShape.circle,
   });
 
@@ -120,6 +121,8 @@ class DateRangePicker extends StatefulWidget {
   final DateRangePickerController? controller;
 
   final BoxShape selectedShape;
+
+  final ValueChanged<DateTimeRange?>? onDateTimeRangeChanged;
 
   @override
   State<DateRangePicker> createState() => DateRangePickerState();
@@ -239,11 +242,33 @@ class DateRangePickerState extends State<DateRangePicker>
   }
 
   void _handleStartDateChanged(DateTime? date) {
-    setState(() => _selectedStart.value = date);
+    setState(() {
+      _selectedStart.value = date;
+      // _exchange();
+      checkDateRangeChange();
+    });
   }
 
   void _handleEndDateChanged(DateTime? date) {
-    setState(() => _selectedEnd.value = date);
+    setState(() {
+      _selectedEnd.value = date;
+      checkDateRangeChange();
+    });
+  }
+
+  /// Date range selection callback
+  void checkDateRangeChange() {
+    if (widget.onDateTimeRangeChanged == null) return;
+    if (_hasSelectedDateRange) {
+      if (_selectedStart.value!.isAfter(_selectedEnd.value!)) {
+        return;
+      }
+      final DateTimeRange selectedRange =
+          DateTimeRange(start: _selectedStart.value!, end: _selectedEnd.value!);
+      widget.onDateTimeRangeChanged!(selectedRange);
+    } else {
+      widget.onDateTimeRangeChanged!(null);
+    }
   }
 
   bool get _hasSelectedDateRange =>
@@ -512,18 +537,34 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
   void _updateSelection(DateTime date) {
     _vibrate();
     setState(() {
-      if (_startDate != null &&
-          _endDate == null &&
-          !date.isBefore(_startDate!)) {
-        _endDate = date;
+      if (_startDate != null && _endDate != null) {
+        _startDate = date;
+        _endDate = null;
+        widget.onStartDateChanged?.call(_startDate!);
         widget.onEndDateChanged?.call(_endDate);
+      } else if (_startDate != null && _endDate == null) {
+        if (date.isBefore(_startDate!)) {
+          _endDate = _startDate;
+          _startDate = date;
+          widget.onStartDateChanged?.call(_startDate!);
+          widget.onEndDateChanged?.call(_endDate);
+        } else {
+          _endDate = date;
+          widget.onEndDateChanged?.call(_endDate);
+        }
+      } else if (_startDate == null && _endDate != null) {
+        if (date.isAfter(_endDate!)) {
+          _startDate = _endDate;
+          _endDate = date;
+          widget.onStartDateChanged?.call(_startDate!);
+          widget.onEndDateChanged?.call(_endDate);
+        } else {
+          _startDate = date;
+          widget.onStartDateChanged?.call(_startDate!);
+        }
       } else {
         _startDate = date;
         widget.onStartDateChanged?.call(_startDate!);
-        if (_endDate != null) {
-          _endDate = null;
-          widget.onEndDateChanged?.call(_endDate);
-        }
       }
     });
   }

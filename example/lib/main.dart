@@ -44,6 +44,9 @@ class _MyAppState extends State<MyApp> {
                 enableTextColor: Colors.black,
                 disableTextColor: Colors.grey,
                 selectedShape: BoxShape.circle,
+                onDateTimeRangeChanged: (DateTimeRange? dateTimeRange) {
+                  debugPrint('$dateTimeRange');
+                },
               ),
             ),
             Row(
