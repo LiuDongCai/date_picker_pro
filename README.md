@@ -13,19 +13,20 @@
 <p align="center">
   <a href="#usage">Usage</a> •
   <a href="#issues-and-feedback">Issues and Feedback</a> •
-  <a href="#author">Author</a> •
   <a href="#license">License</a>
 </p>
 
 > [Feedback welcome](https://github.com/LiuDongCai/flutter_date_picker/issues) and [Pull Requests](https://github.com/LiuDongCai/flutter_date_picker/pulls) are most welcome!
 
+English | [**中文**](https://github.com/LiuDongCai/flutter_date_picker/blob/master/README-ZH.md)
+
 ## Usage
 
 ### Import the package
 
-To use this plugin, follow the [**pub.dev**](https://pub.dev/packages/flutter_date_picker).
+To use this package, follow the [**pub.dev-flutter_date_picker**](https://pub.dev/packages/flutter_date_picker).
 
-### Use
+### How to use
 
 Add the following import to your Dart code:
 
@@ -48,8 +49,6 @@ Add the following import to your Dart code:
         selectedShape: BoxShape.rectangle,
     )
 ```
-
-Initialize ScreenshotCallback with the scopes you want:
 
 | API               | description                                                |
 |-------------------|------------------------------------------------------------|
