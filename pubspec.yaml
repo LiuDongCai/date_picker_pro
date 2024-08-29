@@ -1,7 +1,7 @@
-name: flutter_date_picker
-description: flutter_date_picker,Provide date range select,More will be provided in the future
+name: date_picker_pro
+description: date_picker_pro,Provide date range select,More will be provided in the future
 version: 0.0.1
-homepage: https://github.com/LiuDongCai/flutter_date_picker
+homepage: https://github.com/LiuDongCai/date_picker_pro
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

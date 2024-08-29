@@ -21,7 +21,7 @@ dev_dependencies:
 
   fluttertoast: ^8.2.8
 
-  flutter_date_picker:
+  date_picker_pro:
     path: ../
 
 flutter:

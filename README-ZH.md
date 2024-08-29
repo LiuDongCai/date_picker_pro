@@ -1,13 +1,13 @@
-<h1 align="center">flutter_date_picker</h1>
+<h1 align="center">date_picker_pro</h1>
 <h4 align="center">
   日期选择器，目前提供日期范围选择，未来将提供更多功能
 </h4>
 
 <div align="center">
-  <a href="https://pub.dev/packages/flutter_date_picker">
-    <img src="https://img.shields.io/pub/v/flutter_date_picker.svg" />
+  <a href="https://pub.dev/packages/date_picker_pro">
+    <img src="https://img.shields.io/pub/v/date_picker_pro.svg" />
   </a>
-  <img src="https://img.shields.io/github/license/LiuDongCai/flutter_date_picker" />
+  <img src="https://img.shields.io/github/license/LiuDongCai/date_picker_pro" />
 </div>
 
 <p align="center">
@@ -16,22 +16,22 @@
   <a href="#license">License</a>
 </p>
 
-> [Feedback welcome](https://github.com/LiuDongCai/flutter_date_picker/issues) and [Pull Requests](https://github.com/LiuDongCai/flutter_date_picker/pulls) are most welcome!
+> [Feedback welcome](https://github.com/LiuDongCai/date_picker_pro/issues) and [Pull Requests](https://github.com/LiuDongCai/date_picker_pro/pulls) are most welcome!
 
-[**English**](https://github.com/LiuDongCai/flutter_date_picker/blob/master/README-ZH.md) | 中文
+[**English**](https://github.com/LiuDongCai/date_picker_pro/blob/master/README-ZH.md) | 中文
 
 ## Usage
 
 ### Import the package
 
-要使用这个库，点击[**pub.dev-flutter_date_picker**](https://pub.dev/packages/flutter_date_picker).
+要使用这个库，点击[**pub.dev-date_picker_pro**](https://pub.dev/packages/date_picker_pro).
 
 ### Use
 
 使用示例如下：
 
 ```dart
-    import 'package:flutter_date_picker/date_picker.dart';
+    import 'package:date_picker_pro/date_picker.dart';
 
     DateRangePicker(
         controller: dateRangePickerController,
@@ -68,7 +68,7 @@ https://github.com/user-attachments/assets/4c0620ca-43c9-4c94-b06f-8b8ed43b1c05
 
 ## Issues and Feedback
 
-请[**提交问题**](https://github.com/LiuDongCai/flutter_date_picker/issues) 以发送反馈或报告错误。谢谢！
+请[**提交问题**](https://github.com/LiuDongCai/date_picker_pro/issues) 以发送反馈或报告错误。谢谢！
 
 ## License
 

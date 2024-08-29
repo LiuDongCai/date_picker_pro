@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_date_picker/date_range_picker/date_range_picker.dart';
+import 'package:date_picker_pro/date_range_picker/date_range_picker.dart';
 
 /// Date range picker controller
 class DateRangePickerController {

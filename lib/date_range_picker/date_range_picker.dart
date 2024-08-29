@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_date_picker/date_range_picker/date_range_picker_controller.dart';
+import 'package:date_picker_pro/date_range_picker/date_range_picker_controller.dart';
 
 const Duration _dialogSizeAnimationDuration = Duration(milliseconds: 200);
 const double _kMaxTextScaleFactor = 1.3;

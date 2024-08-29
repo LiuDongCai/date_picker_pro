@@ -1,4 +1,4 @@
-package com.liudongcai.flutter_date_picker
+package com.liudongcai.date_picker_pro
 
 import io.flutter.embedding.android.FlutterActivity
 
