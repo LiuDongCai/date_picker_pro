@@ -53,4 +53,24 @@ class DateRangePickerController {
   setSelectedShape(BoxShape shape) {
     _state?.setSelectedShape(shape);
   }
+
+  /// Set the Month Text Style
+  setMonthTextStyle(TextStyle style) {
+    _state?.setMonthTextStyle(style);
+  }
+
+  /// Set the Month Header Height
+  setMonthHeaderItemHeight(double height) {
+    _state?.setMonthHeaderItemHeight(height);
+  }
+
+  /// Set the Month Header Color
+  setMonthHeaderColor(Color color) {
+    _state?.setMonthHeaderColor(color);
+  }
+
+  /// Set the BackgroundColor
+  setBackgroundColor(Color color) {
+    _state?.setBackgroundColor(color);
+  }
 }

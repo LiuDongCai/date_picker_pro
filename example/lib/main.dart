@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
           children: [
             SizedBox(
               width: double.infinity,
-              height: 360,
+              height: 340,
               child: DateRangePicker(
                 controller: dateRangePickerController,
                 initialDateRange: DateTimeRange(
@@ -44,6 +44,14 @@ class _MyAppState extends State<MyApp> {
                 enableTextColor: Colors.black,
                 disableTextColor: Colors.grey,
                 selectedShape: BoxShape.circle,
+                monthHeaderItemHeight: 40,
+                monthHeaderColor: Colors.grey.shade300,
+                backgroundColor: Colors.white,
+                monthTextStyle: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                ),
                 onDateTimeRangeChanged: (DateTimeRange? dateTimeRange) {
                   debugPrint('$dateTimeRange');
                 },
@@ -187,6 +195,81 @@ class _MyAppState extends State<MyApp> {
                       _toast('setSelectedShape');
                     },
                     child: const Text('setSelectedShape'),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      dateRangePickerController
+                          ?.setBackgroundColor(Colors.amber);
+                      _toast('setBackgroundColor');
+                    },
+                    child: const Text(
+                      'setBackgroundColor',
+                      style: TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+              ],
+            ),
+            Row(
+              children: [
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      dateRangePickerController?.setMonthHeaderItemHeight(50);
+                      _toast('setMonthHeaderItemHeight');
+                    },
+                    child: const Text(
+                      'setMonthHeaderItemHeight',
+                      style: TextStyle(
+                        fontSize: 9,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      dateRangePickerController
+                          ?.setMonthHeaderColor(Colors.amber.shade100);
+                      _toast('setMonthHeaderColor');
+                    },
+                    child: const Text(
+                      'setMonthHeaderColors',
+                      style: TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+              ],
+            ),
+            Row(
+              children: [
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      dateRangePickerController?.setMonthTextStyle(
+                        const TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      );
+                      _toast('setMonthTextStyle');
+                    },
+                    child: const Text(
+                      'setMonthTextStyle',
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),

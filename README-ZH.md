@@ -47,28 +47,42 @@
         enableTextColor: Colors.black,
         disableTextColor: Colors.grey,
         selectedShape: BoxShape.rectangle,
+        monthHeaderItemHeight: 40,
+        monthHeaderColor: Colors.grey.shade300,
+        backgroundColor: Colors.white,
+        monthTextStyle: const TextStyle(
+            color: Colors.black,
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+        ),
         onDateTimeRangeChanged: (DateTimeRange? dateTimeRange) {
           debugPrint('$dateTimeRange');
         },
     )
 ```
 
-| API                    | 描述             |
-|------------------------|----------------|
-| controller             | 控制器            |
-| initialDateRange       | 初始化所选日期范围      |
-| firstDate              | 第一个可以选择的日期     |
-| lastDate               | 最后一个可以选择的日期    |
-| intervalColor          | 所选日期范围区间的颜色    |
-| selectedColor          | 选中日期的颜色        |
-| selectedTextColor      | 选中日期的文本颜色      |
-| enableTextColor        | 可选日期的文本颜色      |
-| disableTextColor       | 不可选日期的文本颜色     |
-| selectedShape          | 选中日期的形状，含矩形、圆形 |
-| onDateTimeRangeChanged | 选中日期范围回调       |
+| API                                                             | 描述                    |
+|-----------------------------------------------------------------|-----------------------|
+| controller                                                      | 控制器                   |
+| initialDateRange<br/>controller.setInitialDateRange()           | 初始化所选日期范围             |
+| firstDate                                                       | 第一个可以选择的日期            |
+| lastDate                                                        | 最后一个可以选择的日期           |
+| intervalColor<br/>controller.setIntervalColor()                 | 所选日期范围区间的颜色           |
+| selectedColor<br/>controller.setSelectedColor()                 | 选中日期的颜色               |
+| selectedTextColor<br/>controller.setSelectedTextColor()         | 选中日期的文本颜色             |
+| enableTextColor<br/>controller.setEnableTextColor()             | 可选日期的文本颜色             |
+| disableTextColor<br/>controller.setDisableTextColor()           | 不可选日期的文本颜色            |
+| selectedShape<br/>controller.setSelectedShape()                 | 选中日期的形状，含矩形、圆形        |
+| onDateTimeRangeChanged                                          | 选中日期范围回调              |
+| monthTextStyle<br/>controller.setMonthTextStyle()               | 设置月的文本样式              |
+| monthHeaderColor<br/>controller.setMonthHeaderColor()           | 设置月的背景颜色              |
+| monthHeaderItemHeight<br/>controller.setMonthHeaderItemHeight() | 设置月的标题高度              |
+| backgroundColor<br/>controller.setBackgroundColor()             | 设置背景颜色                |
+| controller.reset()                                              | 重置选中日期范围              |
+| controller.getDateTimeRange()                                   | 获取选中的日期范围，如果没选返回 null |
 
 ##### Sample([Source Code](/example/lib/main.dart))
-https://github.com/user-attachments/assets/4c0620ca-43c9-4c94-b06f-8b8ed43b1c05
+https://github.com/user-attachments/assets/3abd3861-6ea9-4875-aac5-1a44d9b529b2
 
 ## Issues and Feedback
 

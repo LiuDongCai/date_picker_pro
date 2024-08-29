@@ -7,8 +7,6 @@ import 'package:date_picker_pro/date_range_picker/date_range_picker_controller.d
 
 const Duration _dialogSizeAnimationDuration = Duration(milliseconds: 200);
 const double _kMaxTextScaleFactor = 1.3;
-const double _monthItemHeaderHeight = 58.0;
-const double _monthItemFooterHeight = 12.0;
 const Duration _monthScrollDuration = Duration(milliseconds: 200);
 
 const double _monthItemRowHeight = 42.0;
@@ -93,6 +91,10 @@ class DateRangePicker extends StatefulWidget {
     this.selectedTextColor,
     this.enableTextColor,
     this.disableTextColor,
+    this.monthTextStyle,
+    this.monthHeaderItemHeight,
+    this.monthHeaderColor,
+    this.backgroundColor,
     this.controller,
     this.onDateTimeRangeChanged,
     this.selectedShape = BoxShape.circle,
@@ -118,6 +120,14 @@ class DateRangePicker extends StatefulWidget {
 
   final Color? disableTextColor;
 
+  final Color? monthHeaderColor;
+
+  final Color? backgroundColor;
+
+  final TextStyle? monthTextStyle;
+
+  final double? monthHeaderItemHeight;
+
   final DateRangePickerController? controller;
 
   final BoxShape selectedShape;
@@ -142,6 +152,10 @@ class DateRangePickerState extends State<DateRangePicker>
   Color? selectedTextColor;
   Color? enableTextColor;
   Color? disableTextColor;
+  Color? monthHeaderColor;
+  Color? backgroundColor;
+  TextStyle? monthTextStyle;
+  double? monthHeaderItemHeight;
   BoxShape selectedShape = BoxShape.circle;
 
   @override
@@ -154,6 +168,10 @@ class DateRangePickerState extends State<DateRangePicker>
     selectedTextColor = widget.selectedTextColor;
     enableTextColor = widget.enableTextColor;
     disableTextColor = widget.disableTextColor;
+    monthHeaderColor = widget.monthHeaderColor;
+    backgroundColor = widget.backgroundColor;
+    monthTextStyle = widget.monthTextStyle;
+    monthHeaderItemHeight = widget.monthHeaderItemHeight;
     selectedShape = widget.selectedShape;
   }
 
@@ -241,6 +259,34 @@ class DateRangePickerState extends State<DateRangePicker>
     });
   }
 
+  /// Set the Month Text Style
+  setMonthTextStyle(TextStyle style) {
+    setState(() {
+      monthTextStyle = style;
+    });
+  }
+
+  /// Set the Month Header Height
+  setMonthHeaderItemHeight(double height) {
+    setState(() {
+      monthHeaderItemHeight = height;
+    });
+  }
+
+  /// Set the Month Header Color
+  setMonthHeaderColor(Color color) {
+    setState(() {
+      monthHeaderColor = color;
+    });
+  }
+
+  /// Set the BackgroundColor
+  setBackgroundColor(Color color) {
+    setState(() {
+      backgroundColor = color;
+    });
+  }
+
   void _handleStartDateChanged(DateTime? date) {
     setState(() {
       _selectedStart.value = date;
@@ -299,6 +345,10 @@ class DateRangePickerState extends State<DateRangePicker>
       selectedTextColor: selectedTextColor,
       enableTextColor: enableTextColor,
       disableTextColor: disableTextColor,
+      monthHeaderColor: monthHeaderColor,
+      backgroundColor: backgroundColor,
+      monthTextStyle: monthTextStyle,
+      monthHeaderItemHeight: monthHeaderItemHeight,
       selectedShape: selectedShape,
       onStartDateChanged: _handleStartDateChanged,
       onEndDateChanged: _handleEndDateChanged,
@@ -353,6 +403,10 @@ class _CalendarRangePickerDialog extends StatelessWidget {
     required this.selectedTextColor,
     required this.enableTextColor,
     required this.disableTextColor,
+    required this.monthHeaderColor,
+    required this.backgroundColor,
+    required this.monthTextStyle,
+    required this.monthHeaderItemHeight,
     required this.selectedShape,
   });
 
@@ -368,21 +422,21 @@ class _CalendarRangePickerDialog extends StatelessWidget {
   final Color? selectedTextColor;
   final Color? enableTextColor;
   final Color? disableTextColor;
+  final Color? monthHeaderColor;
+  final Color? backgroundColor;
+  final TextStyle? monthTextStyle;
+  final double? monthHeaderItemHeight;
   final BoxShape selectedShape;
 
   @override
   Widget build(BuildContext context) {
-    final DatePickerThemeData themeData = DatePickerTheme.of(context);
-    final DatePickerThemeData defaults = DatePickerTheme.defaults(context);
-    final Color? dialogBackground = themeData.rangePickerBackgroundColor ??
-        defaults.rangePickerBackgroundColor;
-
     return SafeArea(
       top: false,
       left: false,
       right: false,
+      bottom: false,
       child: Scaffold(
-        backgroundColor: dialogBackground,
+        backgroundColor: backgroundColor ?? Colors.white,
         body: _CalendarDateRangePicker(
           initialStartDate: selectedStartDate,
           initialEndDate: selectedEndDate,
@@ -396,6 +450,9 @@ class _CalendarRangePickerDialog extends StatelessWidget {
           selectedTextColor: selectedTextColor,
           enableTextColor: enableTextColor,
           disableTextColor: disableTextColor,
+          monthHeaderColor: monthHeaderColor,
+          monthTextStyle: monthTextStyle,
+          monthHeaderItemHeight: monthHeaderItemHeight,
           selectedShape: selectedShape,
         ),
       ),
@@ -417,6 +474,9 @@ class _CalendarDateRangePicker extends StatefulWidget {
     Color? selectedTextColor,
     Color? enableTextColor,
     Color? disableTextColor,
+    Color? monthHeaderColor,
+    TextStyle? monthTextStyle,
+    double? monthHeaderItemHeight,
     required this.selectedShape,
   })  : initialStartDate = initialStartDate != null
             ? DateUtils.dateOnly(initialStartDate)
@@ -430,7 +490,15 @@ class _CalendarDateRangePicker extends StatefulWidget {
         selectedColor = selectedColor ?? Colors.blue,
         selectedTextColor = selectedTextColor ?? Colors.white,
         enableTextColor = enableTextColor ?? Colors.black,
-        disableTextColor = disableTextColor ?? Colors.grey {
+        disableTextColor = disableTextColor ?? Colors.grey,
+        monthHeaderColor = monthHeaderColor ?? Colors.blue.shade50,
+        monthTextStyle = monthTextStyle ??
+            const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+        monthHeaderItemHeight = monthHeaderItemHeight ?? 40 {
     assert(
       this.initialStartDate == null ||
           this.initialEndDate == null ||
@@ -467,6 +535,12 @@ class _CalendarDateRangePicker extends StatefulWidget {
 
   final Color disableTextColor;
 
+  final Color monthHeaderColor;
+
+  final TextStyle monthTextStyle;
+
+  final double monthHeaderItemHeight;
+
   final BoxShape selectedShape;
 
   @override
@@ -498,6 +572,16 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
     }
 
     _showWeekBottomDivider = _initialMonthIndex != 0;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToBottom();
+    });
+  }
+
+  void _scrollToBottom() {
+    if (_controller.hasClients) {
+      _controller.jumpTo(_controller.position.maxScrollExtent);
+    }
   }
 
   @override
@@ -589,13 +673,16 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
       selectedTextColor: widget.selectedTextColor,
       enableTextColor: widget.enableTextColor,
       disableTextColor: widget.disableTextColor,
+      monthTextStyle: widget.monthTextStyle,
+      monthHeaderColor: widget.monthHeaderColor,
+      monthHeaderItemHeight: widget.monthHeaderItemHeight,
       selectedShape: widget.selectedShape,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    const Key sliverAfterKey = Key('sliverAfterKey');
+    // const Key sliverAfterKey = Key('sliverAfterKey');
     return Column(
       children: <Widget>[
         const _DayHeaders(),
@@ -611,7 +698,7 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
               child: CustomScrollView(
                 key: _scrollViewKey,
                 controller: _controller,
-                center: sliverAfterKey,
+                // center: sliverAfterKey,
                 slivers: <Widget>[
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
@@ -621,7 +708,7 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
                     ),
                   ),
                   SliverList(
-                    key: sliverAfterKey,
+                    // key: sliverAfterKey,
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) =>
                           _buildMonthItem(context, index, false),
@@ -660,6 +747,9 @@ class _MonthItem extends StatefulWidget {
     required this.selectedTextColor,
     required this.enableTextColor,
     required this.disableTextColor,
+    required this.monthTextStyle,
+    required this.monthHeaderColor,
+    required this.monthHeaderItemHeight,
     required this.selectedShape,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(selectedDateStart == null ||
@@ -695,6 +785,12 @@ class _MonthItem extends StatefulWidget {
   final Color enableTextColor;
 
   final Color disableTextColor;
+
+  final Color monthHeaderColor;
+
+  final TextStyle monthTextStyle;
+
+  final double monthHeaderItemHeight;
 
   final BoxShape selectedShape;
 
@@ -810,8 +906,6 @@ class _MonthItemState extends State<_MonthItem> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final TextTheme textTheme = themeData.textTheme;
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
     final int year = widget.displayedMonth.year;
@@ -886,17 +980,18 @@ class _MonthItemState extends State<_MonthItem> {
             ? _maxCalendarWidthLandscape
             : _maxCalendarWidthPortrait;
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
+          color: widget.monthHeaderColor,
           constraints: BoxConstraints(maxWidth: maxWidth),
-          height: _monthItemHeaderHeight,
+          height: widget.monthHeaderItemHeight,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           alignment: AlignmentDirectional.centerStart,
           child: ExcludeSemantics(
             child: Text(
               localizations.formatMonthYear(widget.displayedMonth),
-              style: textTheme.bodyMedium!
-                  .apply(color: themeData.colorScheme.onSurface),
+              style: widget.monthTextStyle,
             ),
           ),
         ),
@@ -906,6 +1001,7 @@ class _MonthItemState extends State<_MonthItem> {
             maxHeight: gridHeight,
           ),
           child: GridView.custom(
+            padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: _monthItemGridDelegate,
             childrenDelegate: SliverChildListDelegate(
@@ -914,7 +1010,6 @@ class _MonthItemState extends State<_MonthItem> {
             ),
           ),
         ),
-        const SizedBox(height: _monthItemFooterHeight),
       ],
     );
   }

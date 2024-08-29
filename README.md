@@ -47,28 +47,42 @@ Add the following import to your Dart code:
         enableTextColor: Colors.black,
         disableTextColor: Colors.grey,
         selectedShape: BoxShape.rectangle,
+        monthHeaderItemHeight: 40,
+        monthHeaderColor: Colors.grey.shade300,
+        backgroundColor: Colors.white,
+        monthTextStyle: const TextStyle(
+            color: Colors.black,
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+        ),
         onDateTimeRangeChanged: (DateTimeRange? dateTimeRange) {
           debugPrint('$dateTimeRange');
         },
     )
 ```
 
-| API                    | description                                     |
-|------------------------|-------------------------------------------------|
-| controller             | Controller,                                     |
-| initialDateRange       | Initialize the selected range                   |
-| firstDate              | The first date that can be selected             |
-| lastDate               | The last date that can be selected              |
-| intervalColor          | The color of the selected range's interval      |
-| selectedColor          | Selected date color                             |
-| selectedTextColor      | The text color of the selected date             |
-| enableTextColor        | The text color of selectable dates              |
-| disableTextColor       | The text color of dates that cannot be selected |
-| selectedShape          | Select the shape of the date                    |
-| onDateTimeRangeChanged | Date range selection callback                   |
+| API                                                             | description                                              |
+|-----------------------------------------------------------------|----------------------------------------------------------|
+| controller                                                      | Controller,                                              |
+| initialDateRange<br/>controller.setInitialDateRange()           | Initialize the selected range                            |
+| firstDate                                                       | The first date that can be selected                      |
+| lastDate                                                        | The last date that can be selected                       |
+| intervalColor<br/>controller.setIntervalColor()                 | The color of the selected range's interval               |
+| selectedColor<br/>controller.setSelectedColor()                 | Selected date color                                      |
+| selectedTextColor<br/>controller.setSelectedTextColor()         | The text color of the selected date                      |
+| enableTextColor<br/>controller.setEnableTextColor()             | The text color of selectable dates                       |
+| disableTextColor<br/>controller.setDisableTextColor()           | The text color of dates that cannot be selected          |
+| selectedShape<br/>controller.setSelectedShape()                 | Select the shape of the date                             |
+| onDateTimeRangeChanged                                          | Date range selection callback                            |
+| monthTextStyle<br/>controller.setMonthTextStyle()               | Set month text style                                     |
+| monthHeaderColor<br/>controller.setMonthHeaderColor()           | Set the background color for the head of the month       |
+| monthHeaderItemHeight<br/>controller.setMonthHeaderItemHeight() | Set the head height of the month                         |
+| backgroundColor<br/>controller.setBackgroundColor()             | Set background color                                     |
+| controller.reset()                                              | Reset the selected date range                            |
+| controller.getDateTimeRange()                                   | get the selected date range, return null if not selected |
 
 ##### Sample([Source Code](/example/lib/main.dart))
-https://github.com/user-attachments/assets/4c0620ca-43c9-4c94-b06f-8b8ed43b1c05
+https://github.com/user-attachments/assets/3abd3861-6ea9-4875-aac5-1a44d9b529b2
 
 ## Issues and Feedback
 
