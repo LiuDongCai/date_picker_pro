@@ -63,7 +63,7 @@ Add the following import to your Dart code:
 
 | API                                                             | description                                              |
 |-----------------------------------------------------------------|----------------------------------------------------------|
-| controller                                                      | Controller,                                              |
+| controller                                                      | Controller                                               |
 | initialDateRange<br/>controller.setInitialDateRange()           | Initialize the selected range                            |
 | firstDate                                                       | The first date that can be selected                      |
 | lastDate                                                        | The last date that can be selected                       |
