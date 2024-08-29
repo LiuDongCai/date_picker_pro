@@ -50,18 +50,18 @@ Add the following import to your Dart code:
     )
 ```
 
-| API               | description                                                |
-|-------------------|------------------------------------------------------------|
-| controller        | Controller, provide reset() and getDateTimeRange() methods |
-| initialDateRange  | Initialize the selected range                              |
-| firstDate         | The first date that can be selected                        |
-| lastDate          | The last date that can be selected                         |
-| intervalColor     | The color of the selected range's interval                 |
-| selectedColor     | Selected date color                                        |
-| selectedTextColor | The text color of the selected date                        |
-| enableTextColor   | The text color of selectable dates                         |
-| disableTextColor  | The text color of dates that cannot be selected            |
-| selectedShape     | Select the shape of the date                               |
+| API               | description                                     |
+|-------------------|-------------------------------------------------|
+| controller        | Controller,                                     |
+| initialDateRange  | Initialize the selected range                   |
+| firstDate         | The first date that can be selected             |
+| lastDate          | The last date that can be selected              |
+| intervalColor     | The color of the selected range's interval      |
+| selectedColor     | Selected date color                             |
+| selectedTextColor | The text color of the selected date             |
+| enableTextColor   | The text color of selectable dates              |
+| disableTextColor  | The text color of dates that cannot be selected |
+| selectedShape     | Select the shape of the date                    |
 
 ##### Sample([Source Code](/example/lib/main.dart))
 https://github.com/user-attachments/assets/4c0620ca-43c9-4c94-b06f-8b8ed43b1c05

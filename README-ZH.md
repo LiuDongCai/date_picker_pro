@@ -50,18 +50,18 @@
     )
 ```
 
-| API               | 描述                                        |
-|-------------------|-------------------------------------------|
-| controller        | 控制器，提供 reset() and getDateTimeRange()  方法 |
-| initialDateRange  | 初始化所选日期范围                                 |
-| firstDate         | 第一个可以选择的日期                                |
-| lastDate          | 最后一个可以选择的日期                               |
-| intervalColor     | 所选日期范围区间的颜色                               |
-| selectedColor     | 选中日期的颜色                                   |
-| selectedTextColor | 选中日期的文本颜色                                 |
-| enableTextColor   | 可选日期的文本颜色                                 |
-| disableTextColor  | 不可选日期的文本颜色                                |
-| selectedShape     | 选中日期的形状，含矩形、圆形                            |
+| API               | 描述             |
+|-------------------|----------------|
+| controller        | 控制器            |
+| initialDateRange  | 初始化所选日期范围      |
+| firstDate         | 第一个可以选择的日期     |
+| lastDate          | 最后一个可以选择的日期    |
+| intervalColor     | 所选日期范围区间的颜色    |
+| selectedColor     | 选中日期的颜色        |
+| selectedTextColor | 选中日期的文本颜色      |
+| enableTextColor   | 可选日期的文本颜色      |
+| disableTextColor  | 不可选日期的文本颜色     |
+| selectedShape     | 选中日期的形状，含矩形、圆形 |
 
 ##### Sample([Source Code](/example/lib/main.dart))
 https://github.com/user-attachments/assets/4c0620ca-43c9-4c94-b06f-8b8ed43b1c05
