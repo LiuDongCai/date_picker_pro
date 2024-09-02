@@ -84,8 +84,9 @@ DatePicker 使用示例如下：
 | backgroundColor<br/>controller.setBackgroundColor()             | 设置背景颜色         |
 
 ##### DateRangePicker Sample([Source Code](/example/lib/date_range_picker_demo.dart))
-[image](./gif/date_picker.gif)
-Demo video:
+![image](./gif/date_picker.gif)
+
+##### Demo video:
 https://github.com/user-attachments/assets/cd3317ac-4cf6-4c99-8b68-a1df5519ac58
 
 ### DateRangePicker Use
@@ -144,8 +145,9 @@ DateRangePicker 使用示例如下：
 | controller.getDateTimeRange()                                   | 获取选中的日期范围，如果没选返回 null |
 
 ##### DateRangePicker Sample([Source Code](/example/lib/date_range_picker_demo.dart))
-[image](./gif/date_ranger_picker.gif)
-Demo video:
+![image](./gif/date_ranger_picker.gif)
+
+##### Demo video:
 https://github.com/user-attachments/assets/3abd3861-6ea9-4875-aac5-1a44d9b529b2
 
 ## Issues and Feedback

@@ -84,8 +84,9 @@ Add the following import to your Dart code(DatePicker):
 | backgroundColor<br/>controller.setBackgroundColor()             | Set background color                                     |
 
 ##### DateRangePicker Sample([Source Code](/example/lib/date_range_picker_demo.dart))
-[image](./gif/date_picker.gif)
-Demo video:
+![image](./gif/date_picker.gif)
+
+##### Demo video:
 https://github.com/user-attachments/assets/cd3317ac-4cf6-4c99-8b68-a1df5519ac58
 
 ### DateRangePicker use
@@ -144,8 +145,9 @@ Add the following import to your Dart code(DateRangePicker):
 | controller.getDateTimeRange()                                   | get the selected date range, return null if not selected |
 
 ##### DateRangePicker Sample([Source Code](/example/lib/date_range_picker_demo.dart))
-[image](./gif/date_ranger_picker.gif)
-Demo video:
+![image](./gif/date_ranger_picker.gif)
+
+##### Demo video:
 https://github.com/user-attachments/assets/3abd3861-6ea9-4875-aac5-1a44d9b529b2
 
 ## Issues and Feedback
