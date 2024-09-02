@@ -1,37 +1,22 @@
+import 'package:date_picker_pro/date_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:date_picker_pro/date_range_picker/date_range_picker.dart';
 
-/// Date range picker controller
-class DateRangePickerController {
-  DateRangePickerState? _state;
+/// Date picker controller
+class DatePickerController {
+  DatePickerState? _state;
 
-  void attach(DateRangePickerState state) {
+  void attach(DatePickerState state) {
     _state = state;
   }
 
-  /// Reset the selected date range
-  void reset() {
-    _state?.reset();
-  }
-
-  /// Get the selected date range
-  DateTimeRange? getDateTimeRange() {
-    return _state?.getDateTimeRange();
-  }
-
-  /// Set the initial date range
-  setInitialDateRange(DateTimeRange dateRange) {
-    _state?.setInitialDateRange(dateRange);
-  }
-
-  /// Set the Current Date
+  /// Set the Current date
   setCurrentDate(DateTime date) {
     _state?.setCurrentDate(date);
   }
 
-  /// Set the Interval Color
-  setIntervalColor(Color color) {
-    _state?.setIntervalColor(color);
+  /// Set the selected date
+  setSelectedDate(DateTime date) {
+    _state?.setSelectedDate(date);
   }
 
   /// Set the Selected Color
@@ -67,11 +52,6 @@ class DateRangePickerController {
   /// Set the Month Header Height
   setMonthHeaderItemHeight(double height) {
     _state?.setMonthHeaderItemHeight(height);
-  }
-
-  /// Set the Month Header Color
-  setMonthHeaderColor(Color color) {
-    _state?.setMonthHeaderColor(color);
   }
 
   /// Set the BackgroundColor

@@ -147,6 +147,7 @@ class DateRangePickerState extends State<DateRangePicker>
   final RestorableBool _autoValidate = RestorableBool(false);
   final GlobalKey _calendarPickerKey = GlobalKey();
 
+  DateTime? currentDate;
   Color? intervalColor;
   Color? selectedColor;
   Color? selectedTextColor;
@@ -163,6 +164,7 @@ class DateRangePickerState extends State<DateRangePicker>
     super.initState();
     widget.controller?.attach(this);
     // Initialize
+    currentDate = widget.currentDate;
     intervalColor = widget.intervalColor;
     selectedColor = widget.selectedColor;
     selectedTextColor = widget.selectedTextColor;
@@ -207,6 +209,13 @@ class DateRangePickerState extends State<DateRangePicker>
         ? DateTimeRange(start: _selectedStart.value!, end: _selectedEnd.value!)
         : null;
     return selectedRange;
+  }
+
+  /// Set the Current Date
+  void setCurrentDate(DateTime date) {
+    setState(() {
+      currentDate = date;
+    });
   }
 
   /// Set the initial date range
@@ -339,7 +348,7 @@ class DateRangePickerState extends State<DateRangePicker>
       selectedEndDate: _selectedEnd.value,
       firstDate: widget.firstDate,
       lastDate: widget.lastDate,
-      currentDate: widget.currentDate,
+      currentDate: currentDate,
       intervalColor: intervalColor,
       selectedColor: selectedColor,
       selectedTextColor: selectedTextColor,
