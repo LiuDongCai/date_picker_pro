@@ -1,6 +1,10 @@
 <h1 align="center">date_picker_pro</h1>
 <h4 align="center">
-  date_picker_pro,Provide date select(DatePicker) and date range select(DateRangePicker),More will be provided in the future,Welcome to provide suggestions
+  date_picker_pro,Provide DatePicker and DateRangePicker,More will be provided in the future,Welcome to provide suggestions
+</h4>
+
+<h4>
+  The official date selection component cannot be customized in style. This library was created to address this issue, providing style changes and result callbacks. If you need to select a date in a pop-up window, you need to use this library for secondary encapsulation yourself.
 </h4>
 
 <div align="center">

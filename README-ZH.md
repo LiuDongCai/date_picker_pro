@@ -3,6 +3,10 @@
   日期选择器，目前提供日期选择(DatePicker)和日期范围选择(DateRangePicker)，未来将提供更多功能，欢迎提建议
 </h4>
 
+<h4>
+  官方提供的日期选择组件，没办法自定义样式。这个库就是为解决这个问题诞生的，提供样式更改和结果回调。如果需要弹窗选择日期，需要自己使用这个库进行二次封装。
+</h4>
+
 <div align="center">
   <a href="https://pub.dev/packages/date_picker_pro">
     <img src="https://img.shields.io/pub/v/date_picker_pro.svg" />
