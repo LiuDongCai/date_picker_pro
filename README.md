@@ -87,7 +87,7 @@ Add the following import to your Dart code(DatePicker):
 | monthHeaderItemHeight<br/>controller.setMonthHeaderItemHeight() | Set the head height of the month                         |
 | backgroundColor<br/>controller.setBackgroundColor()             | Set background color                                     |
 
-##### DateRangePicker Sample([Source Code](/example/lib/date_range_picker_demo.dart))
+##### DatePicker Sample([Source Code](/example/lib/date_picker_demo.dart))
 ![image](./gif/date_picker.gif)
 
 ##### Demo video:

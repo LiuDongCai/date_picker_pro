@@ -241,7 +241,7 @@ class DatePickerState extends State<DatePicker> {
           final String semanticLabelSuffix =
               isToday ? ', ${_localizations.currentDateLabel}' : '';
           SemanticsService.announce(
-            '${_localizations.selectedDateLabel} ${_localizations.formatFullDate(_selectedDate!)}$semanticLabelSuffix',
+            '${_localizations.formatFullDate(_selectedDate!)}$semanticLabelSuffix',
             _textDirection,
           );
         case TargetPlatform.android:
@@ -1180,7 +1180,7 @@ class _Day extends StatefulWidget {
 }
 
 class _DayState extends State<_Day> {
-  final WidgetStatesController _statesController = WidgetStatesController();
+  final MaterialStatesController _statesController = MaterialStatesController();
 
   @override
   Widget build(BuildContext context) {
@@ -1192,9 +1192,9 @@ class _DayState extends State<_Day> {
     }
 
     T? resolve<T>(
-        WidgetStateProperty<T>? Function(DatePickerThemeData? theme)
+        MaterialStateProperty<T>? Function(DatePickerThemeData? theme)
             getProperty,
-        Set<WidgetState> states) {
+        Set<MaterialState> states) {
       return effectiveValue(
         (DatePickerThemeData? theme) {
           return getProperty(theme)?.resolve(states);
@@ -1207,9 +1207,9 @@ class _DayState extends State<_Day> {
     final String semanticLabelSuffix =
         widget.isToday ? ', ${localizations.currentDateLabel}' : '';
 
-    final Set<WidgetState> states = <WidgetState>{
-      if (widget.isDisabled) WidgetState.disabled,
-      if (widget.isSelectedDay) WidgetState.selected,
+    final Set<MaterialState> states = <MaterialState>{
+      if (widget.isDisabled) MaterialState.disabled,
+      if (widget.isSelectedDay) MaterialState.selected,
     };
 
     _statesController.value = states;
@@ -1219,14 +1219,14 @@ class _DayState extends State<_Day> {
             ? theme?.todayBackgroundColor
             : theme?.dayBackgroundColor,
         states);
-    final WidgetStateProperty<Color?> dayOverlayColor =
-        WidgetStateProperty.resolveWith<Color?>(
-      (Set<WidgetState> states) => effectiveValue(
+    final MaterialStateProperty<Color?> dayOverlayColor =
+        MaterialStateProperty.resolveWith<Color?>(
+      (Set<MaterialState> states) => effectiveValue(
           (DatePickerThemeData? theme) =>
               theme?.dayOverlayColor?.resolve(states)),
     );
-    final OutlinedBorder dayShape = resolve<OutlinedBorder?>(
-        (DatePickerThemeData? theme) => theme?.dayShape, states)!;
+    // final OutlinedBorder dayShape = resolve<OutlinedBorder?>(
+    //     (DatePickerThemeData? theme) => theme?.dayShape, states)!;
     final BoxDecoration decoration = widget.isSelectedDay
         ? BoxDecoration(
             color: widget.selectedColor,
@@ -1278,7 +1278,7 @@ class _DayState extends State<_Day> {
         onTap: () => widget.onChanged(widget.day),
         statesController: _statesController,
         overlayColor: dayOverlayColor,
-        customBorder: dayShape,
+        // customBorder: dayShape,
         containedInkWell: true,
         child: Semantics(
           // We want the day of month to be spoken first irrespective of the

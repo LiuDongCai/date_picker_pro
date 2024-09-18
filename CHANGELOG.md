@@ -1,3 +1,7 @@
+## 0.0.5
+
+Compatible with lower versions of Flutter.
+
 ## 0.0.4
 
 Provide date picker.

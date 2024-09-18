@@ -87,7 +87,7 @@ DatePicker 使用示例如下：
 | monthHeaderItemHeight<br/>controller.setMonthHeaderItemHeight() | 设置月的标题高度       |
 | backgroundColor<br/>controller.setBackgroundColor()             | 设置背景颜色         |
 
-##### DateRangePicker Sample([Source Code](/example/lib/date_range_picker_demo.dart))
+##### DatePicker Sample([Source Code](/example/lib/date_range_picker_demo.dart))
 ![image](./gif/date_picker.gif)
 
 ##### Demo video:
