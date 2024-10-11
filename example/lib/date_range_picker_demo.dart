@@ -31,12 +31,13 @@ class _DateRangePickerDemoPageState extends State<DateRangePickerDemoPage> {
             child: DateRangePicker(
               controller: dateRangePickerController,
               initialDateRange: DateTimeRange(
-                start: DateTime(2024, 8, 8),
-                end: DateTime(2024, 8, 28),
+                start: DateTime(2024, 10, 8),
+                end: DateTime(2024, 10, 28),
               ),
               currentDate: DateTime.now(),
-              firstDate: DateTime(2024, 8, 6),
-              lastDate: DateTime(2024, 8, 30),
+              isShowToday: false,
+              firstDate: DateTime(2024, 10, 6),
+              lastDate: DateTime(2024, 10, 30),
               intervalColor: Colors.blueGrey.shade50,
               selectedColor: Colors.blue,
               selectedTextColor: Colors.white,

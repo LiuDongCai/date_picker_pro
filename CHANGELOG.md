@@ -1,3 +1,7 @@
+## 0.0.6
+
+DateRangePicker: Add whether to display the current date.
+
 ## 0.0.5
 
 Compatible with lower versions of Flutter.

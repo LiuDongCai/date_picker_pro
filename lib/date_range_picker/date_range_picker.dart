@@ -97,6 +97,7 @@ class DateRangePicker extends StatefulWidget {
     this.backgroundColor,
     this.controller,
     this.onDateTimeRangeChanged,
+    this.isShowToday = true,
     this.selectedShape = BoxShape.circle,
   });
 
@@ -134,6 +135,8 @@ class DateRangePicker extends StatefulWidget {
 
   final ValueChanged<DateTimeRange?>? onDateTimeRangeChanged;
 
+  final bool isShowToday;
+
   @override
   State<DateRangePicker> createState() => DateRangePickerState();
 }
@@ -158,6 +161,7 @@ class DateRangePickerState extends State<DateRangePicker>
   TextStyle? monthTextStyle;
   double? monthHeaderItemHeight;
   BoxShape selectedShape = BoxShape.circle;
+  bool isShowToday = true;
 
   @override
   void initState() {
@@ -175,6 +179,7 @@ class DateRangePickerState extends State<DateRangePicker>
     monthTextStyle = widget.monthTextStyle;
     monthHeaderItemHeight = widget.monthHeaderItemHeight;
     selectedShape = widget.selectedShape;
+    isShowToday = widget.isShowToday;
   }
 
   @override
@@ -359,6 +364,7 @@ class DateRangePickerState extends State<DateRangePicker>
       monthTextStyle: monthTextStyle,
       monthHeaderItemHeight: monthHeaderItemHeight,
       selectedShape: selectedShape,
+      isShowToday: isShowToday,
       onStartDateChanged: _handleStartDateChanged,
       onEndDateChanged: _handleEndDateChanged,
     );
@@ -417,6 +423,7 @@ class _CalendarRangePickerDialog extends StatelessWidget {
     required this.monthTextStyle,
     required this.monthHeaderItemHeight,
     required this.selectedShape,
+    required this.isShowToday,
   });
 
   final DateTime? selectedStartDate;
@@ -436,6 +443,7 @@ class _CalendarRangePickerDialog extends StatelessWidget {
   final TextStyle? monthTextStyle;
   final double? monthHeaderItemHeight;
   final BoxShape selectedShape;
+  final bool isShowToday;
 
   @override
   Widget build(BuildContext context) {
@@ -463,6 +471,7 @@ class _CalendarRangePickerDialog extends StatelessWidget {
           monthTextStyle: monthTextStyle,
           monthHeaderItemHeight: monthHeaderItemHeight,
           selectedShape: selectedShape,
+          isShowToday: isShowToday,
         ),
       ),
     );
@@ -487,6 +496,7 @@ class _CalendarDateRangePicker extends StatefulWidget {
     TextStyle? monthTextStyle,
     double? monthHeaderItemHeight,
     required this.selectedShape,
+    bool? isShowToday,
   })  : initialStartDate = initialStartDate != null
             ? DateUtils.dateOnly(initialStartDate)
             : null,
@@ -507,7 +517,8 @@ class _CalendarDateRangePicker extends StatefulWidget {
               fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
-        monthHeaderItemHeight = monthHeaderItemHeight ?? 40 {
+        monthHeaderItemHeight = monthHeaderItemHeight ?? 40,
+        isShowToday = isShowToday ?? true {
     assert(
       this.initialStartDate == null ||
           this.initialEndDate == null ||
@@ -551,6 +562,8 @@ class _CalendarDateRangePicker extends StatefulWidget {
   final double monthHeaderItemHeight;
 
   final BoxShape selectedShape;
+
+  final bool isShowToday;
 
   @override
   _CalendarDateRangePickerState createState() =>
@@ -686,6 +699,7 @@ class _CalendarDateRangePickerState extends State<_CalendarDateRangePicker> {
       monthHeaderColor: widget.monthHeaderColor,
       monthHeaderItemHeight: widget.monthHeaderItemHeight,
       selectedShape: widget.selectedShape,
+      isShowToday: widget.isShowToday,
     );
   }
 
@@ -760,6 +774,7 @@ class _MonthItem extends StatefulWidget {
     required this.monthHeaderColor,
     required this.monthHeaderItemHeight,
     required this.selectedShape,
+    required this.isShowToday,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(selectedDateStart == null ||
             !selectedDateStart.isBefore(firstDate)),
@@ -802,6 +817,8 @@ class _MonthItem extends StatefulWidget {
   final double monthHeaderItemHeight;
 
   final BoxShape selectedShape;
+
+  final bool isShowToday;
 
   @override
   _MonthItemState createState() => _MonthItemState();
@@ -899,6 +916,7 @@ class _MonthItemState extends State<_MonthItem> {
       enableTextColor: widget.enableTextColor,
       disableTextColor: widget.disableTextColor,
       selectedShape: widget.selectedShape,
+      isShowToday: widget.isShowToday,
       isDisabled: isDisabled,
       isRangeSelected: isRangeSelected,
       isSelectedDayStart: isSelectedDayStart,
@@ -1043,6 +1061,7 @@ class _DayItem extends StatefulWidget {
     required this.isOneDayRange,
     required this.isToday,
     required this.selectedShape,
+    required this.isShowToday,
   });
 
   final DateTime day;
@@ -1078,6 +1097,8 @@ class _DayItem extends StatefulWidget {
   final bool isToday;
 
   final BoxShape selectedShape;
+
+  final bool isShowToday;
 
   @override
   State<_DayItem> createState() => _DayItemState();
@@ -1129,7 +1150,7 @@ class _DayItemState extends State<_DayItem> {
       );
     } else if (widget.isDisabled) {
       itemStyle = textTheme.bodyMedium?.apply(color: widget.disableTextColor);
-    } else if (widget.isToday) {
+    } else if (widget.isShowToday && widget.isToday) {
       // The current day gets a different text color and a circle stroke
       // border.
       itemStyle = textTheme.bodyMedium?.apply(color: widget.selectedColor);
